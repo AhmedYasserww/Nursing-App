@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:nursing_app/features/auth/presentations/views/log_in_view.dart';
+import 'package:nursing_app/features/auth/presentations/views/sign_up_nursing_view.dart';
 import 'package:nursing_app/features/onboarding/views/know_the_identity_view.dart';
 import 'package:nursing_app/features/onboarding/views/onboarding_view.dart';
 
@@ -28,6 +30,15 @@ abstract class AppRouter{
         path: kKnowTheIdentityView,
         builder: (context, state) => const KnowTheIdentityView(),
       ),
+      GoRoute(
+        path: kLogInView,
+        builder: (context, state) => const LogInView(),
+      ),
+      GoRoute(
+        path: kSignUpView,
+        builder: (context, state) => const SignUpNursingView(),
+      ),
+
 
 
     ],

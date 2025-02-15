@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nursing_app/Core/widgets/custom_button.dart';
 import 'package:nursing_app/features/onboarding/views/widgets/user_selection_card.dart';
+
+import '../../../Core/utils/app_router.dart';
 
 class KnowTheIdentityView extends StatefulWidget {
   const KnowTheIdentityView({super.key});
@@ -16,6 +19,10 @@ class _KnowTheIdentityViewState extends State<KnowTheIdentityView> {
     if (selectedUser != null) {
       print("Navigating as $selectedUser");
     }
+    if(selectedUser == 'Nurse'){
+      GoRouter.of(context).pushReplacement(AppRouter.kSignUpView);
+    }
+
   }
 
   @override
