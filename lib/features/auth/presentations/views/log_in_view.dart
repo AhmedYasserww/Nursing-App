@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:nursing_app/features/auth/presentations/views/widgets/custom_button_details.dart';
-import 'package:nursing_app/features/auth/presentations/views/widgets/custom_email_text_field.dart';
-import 'package:nursing_app/features/auth/presentations/views/widgets/custom_password_text_field.dart';
-import '../../../../core/utils/app_router.dart';
+import 'package:nursing_app/Core/widgets/custom_button.dart';
+import 'package:nursing_app/Core/widgets/custom_text_form_field_widget.dart';
+import 'package:nursing_app/constants.dart';
 
 class LogInView extends StatefulWidget {
   const LogInView({super.key});
@@ -13,17 +11,9 @@ class LogInView extends StatefulWidget {
 }
 
 class _LogInViewState extends State<LogInView> {
-  bool visible = true;
-  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-
-  @override
-  void initState() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    super.initState();
-  }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool rememberMe = false;
 
   @override
   void dispose() {
@@ -35,78 +25,140 @@ class _LogInViewState extends State<LogInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Form(
-        key: globalKey,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                const SizedBox(height: 60),
-                const Text(
-                  "Login",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 30),
-                const SizedBox(
-                    height: 184,
-                    width: 286,
-                    child: Image(image: AssetImage("assets/images/log_in.jpg"))),
-                const SizedBox(height: 21),
-                EmailField(emailController: emailController),
-                const SizedBox(height: 30),
-                PasswordField(
-                  passwordController: passwordController,
-                  visible: visible,
-                  toggleVisibility: () {
-                    setState(() {
-                      visible = !visible;
-                    });
-                  },
-                ),
-                const SizedBox(height: 30),
-                CustomButtonDetails(
-                  onTap: () {
-
-                  },
-                  globalKey: globalKey,
-                  emailController: emailController,
-                  passwordController: passwordController,
-                  text: "Log In",
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  children: [
-                   const Expanded(
-                      flex: 2,
-                      child:  Text(
-                        "Don't have an account?",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: TextButton(
-                        onPressed: () {
-                          GoRouter.of(context).push(AppRouter.kSignUpView);
-                        },
-                        child: const Text(
-                          "Register",
-                          style: TextStyle(fontSize: 22,color: Colors.blue),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 70),
+              const Text(
+                'Hi, Welcome to App',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              CustomTextField(
+                hintText: 'Enter Your Email',
+                controller: emailController,
+              ),
+              const SizedBox(height: 12),
+              CustomTextField(
+                hintText: 'Enter Your Password',
+                controller: passwordController,
+                obscureText: true,
+              ),
+              const SizedBox(height: 12),
+              RememberMeAndForgotPassword(
+                rememberMe: rememberMe,
+                onChanged: (value) {
+                  setState(() {
+                    rememberMe = value!;
+                  });
+                },
+              ),
+              const SizedBox(height: 20),
+              CustomButton(
+                textColor: Colors.white,
+                backgroundColor: kPrimaryColor,
+                text: 'Login',
+                onPressed: () {
+                  // Handle login logic
+                },
+              ),
+              const SizedBox(height: 20),
+              const DividerWithText(),
+              const SizedBox(height: 12),
+              const GoogleLoginButton(),
+              const SizedBox(height: 20),
+              const SignUpRedirect(),
+            ],
           ),
         ),
       ),
     );
   }
+}
 
+class RememberMeAndForgotPassword extends StatelessWidget {
+  final bool rememberMe;
+  final ValueChanged<bool?> onChanged;
 
+  const RememberMeAndForgotPassword({
+    super.key,
+    required this.rememberMe,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Checkbox(value: rememberMe, onChanged: onChanged),
+            const Text('Remember Me'),
+          ],
+        ),
+        TextButton(
+          onPressed: () {},
+          child: const Text('Forgot Password?', style: TextStyle(color: Colors.red)),
+        ),
+      ],
+    );
+  }
+}
+
+class DividerWithText extends StatelessWidget {
+  const DividerWithText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: const [
+        Expanded(child: Divider()),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text('Or With'),
+        ),
+        Expanded(child: Divider()),
+      ],
+    );
+  }
+}
+
+class GoogleLoginButton extends StatelessWidget {
+  const GoogleLoginButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () {},
+      icon: Image.asset('assets/images/google_logo.png', width: 24, height: 24),
+      label: const Text('Login with Google'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        side: const BorderSide(color: Colors.grey),
+      ),
+    );
+  }
+}
+
+class SignUpRedirect extends StatelessWidget {
+  const SignUpRedirect({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Don't have an account?"),
+        TextButton(
+          onPressed: () {},
+          child: const Text('Sign Up', style: TextStyle(color: Colors.blue)),
+        ),
+      ],
+    );
+  }
 }

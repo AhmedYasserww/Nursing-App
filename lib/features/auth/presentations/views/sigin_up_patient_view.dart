@@ -1,23 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/custom_address_text_field.dart';
+import 'package:nursing_app/features/auth/presentations/views/widgets/custom_phone_number_text_field.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/custom_age_text_field.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/custom_button_details.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/custom_email_text_field.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/custom_file_upload_button.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/custom_password_text_field.dart';
-import 'package:nursing_app/features/auth/presentations/views/widgets/custom_phone_number_text_field.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/cutom_name_text_field.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-
-class SignUpNursingView extends StatefulWidget {
-  const SignUpNursingView({super.key});
+class SignUpPatientView extends StatefulWidget {
+  const SignUpPatientView({super.key});
 
   @override
-  State<SignUpNursingView> createState() => _SignUpNursingViewState();
+  State<SignUpPatientView> createState() => _SignUpPatientViewState();
 }
 
-class _SignUpNursingViewState extends State<SignUpNursingView> {
+class _SignUpPatientViewState extends State<SignUpPatientView> {
   bool visible = true;
   final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
@@ -51,7 +51,6 @@ class _SignUpNursingViewState extends State<SignUpNursingView> {
     addressController.dispose();
     super.dispose();
   }
-
   Future<void> pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -69,7 +68,7 @@ class _SignUpNursingViewState extends State<SignUpNursingView> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: const Text(
-          "Create an account for nurses",
+          "Create an account for patient",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
@@ -102,7 +101,8 @@ class _SignUpNursingViewState extends State<SignUpNursingView> {
                 AddressTextField(addressController: addressController),
                 const SizedBox(height: 20),
 
-                CustomFileUploadButton(onTap:pickImage,title: "Upload ID Card",uploadedFile:idCardImage, ),
+
+                CustomFileUploadButton(onTap:pickImage,title: "  Upload Your National ID card",uploadedFile:idCardImage, ),
                 const SizedBox(height: 20),
                 CustomButtonDetails(
                   globalKey: globalKey,
@@ -110,7 +110,7 @@ class _SignUpNursingViewState extends State<SignUpNursingView> {
                   passwordController: passwordController,
                   text: "Sign Up",
                   onTap: () {
-                    // Add registration logic here
+
                   },
                 ),
 
@@ -123,5 +123,3 @@ class _SignUpNursingViewState extends State<SignUpNursingView> {
     );
   }
 }
-
-

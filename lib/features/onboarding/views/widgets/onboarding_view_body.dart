@@ -37,7 +37,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
         currentIndex++;
       });
     } else {
-      GoRouter.of(context).pushReplacement(AppRouter.kKnowTheIdentityView);
+      GoRouter.of(context).pushReplacement(AppRouter.kLogInView);
     }
   }
 

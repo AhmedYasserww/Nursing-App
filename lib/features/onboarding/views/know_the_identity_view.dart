@@ -20,7 +20,10 @@ class _KnowTheIdentityViewState extends State<KnowTheIdentityView> {
       print("Navigating as $selectedUser");
     }
     if(selectedUser == 'Nurse'){
-      GoRouter.of(context).pushReplacement(AppRouter.kSignUpView);
+      GoRouter.of(context).pushReplacement(AppRouter.kSignUpNursingView);
+    }
+    else if(selectedUser == 'Patient'){
+      GoRouter.of(context).pushReplacement(AppRouter.kSignUpPatientView);
     }
 
   }
