@@ -5,6 +5,8 @@ import 'package:nursing_app/features/auth/presentations/views/sign_up_nursing_vi
 import 'package:nursing_app/features/auth/presentations/views/verify_the_account_view.dart';
 import 'package:nursing_app/features/onboarding/views/know_the_identity_view.dart';
 import 'package:nursing_app/features/onboarding/views/onboarding_view.dart';
+
+import '../../features/splash/views/splash_view.dart';
 abstract class AppRouter{
   static const kOnBoardingView='/onBoardingView';
   static const kKnowTheIdentityView='/knowTheIdentityView';
@@ -19,6 +21,7 @@ abstract class AppRouter{
     routes: [
       GoRoute(
         path: '/',
+       // builder: (context, state) => const SplashView(),
         builder: (context, state) => const VerifyTheAccountView(),
 
       ),
