@@ -18,7 +18,10 @@ class VerifyTheAccountViewBody extends StatelessWidget {
           const Spacer(flex: 115,),
           const BuildOtpWidget(),
           const SizedBox(height: 73),
-         CustomButton(textColor: Colors.white , text: "VERIFY", onPressed: (){}),
+         CustomButton(
+             textColor: Colors.white ,
+             text: "VERIFY",
+             onPressed: (){}),
           const Spacer(flex: 136,),
           const ResendTextWidget(),
           const Spacer(flex: 151,)
