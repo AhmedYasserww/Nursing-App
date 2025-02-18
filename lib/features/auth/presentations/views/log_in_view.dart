@@ -1,89 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:nursing_app/Core/widgets/custom_button.dart';
-import 'package:nursing_app/Core/widgets/custom_text_form_field_widget.dart';
-import 'package:nursing_app/constants.dart';
-
-class LogInView extends StatefulWidget {
+import 'package:go_router/go_router.dart';
+import 'package:nursing_app/Core/utils/app_router.dart';
+import 'package:nursing_app/features/auth/presentations/views/widgets/log_in_view_body.dart';
+class LogInView extends StatelessWidget {
   const LogInView({super.key});
 
   @override
-  State<LogInView> createState() => _LogInViewState();
-}
-
-class _LogInViewState extends State<LogInView> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  bool rememberMe = false;
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 70),
-              const Text(
-                'Hi, Welcome to App',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                hintText: 'Enter Your Email',
-                controller: emailController,
-              ),
-              const SizedBox(height: 12),
-              CustomTextField(
-                hintText: 'Enter Your Password',
-                controller: passwordController,
-                obscureText: true,
-              ),
-              const SizedBox(height: 12),
-              RememberMeAndForgotPassword(
-                rememberMe: rememberMe,
-                onChanged: (value) {
-                  setState(() {
-                    rememberMe = value!;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-              CustomButton(
-                textColor: Colors.white,
-                backgroundColor: kPrimaryColor,
-                text: 'Login',
-                onPressed: () {
-                  // Handle login logic
-                },
-              ),
-              const SizedBox(height: 20),
-              const DividerWithText(),
-              const SizedBox(height: 12),
-              const GoogleLoginButton(),
-              const SizedBox(height: 20),
-              const SignUpRedirect(),
-            ],
-          ),
-        ),
-      ),
+    return const Scaffold(
+      body: LogInViewBody(),
     );
   }
 }
 
-class RememberMeAndForgotPassword extends StatelessWidget {
+class RememberMeAndForgotPasswordWidget extends StatelessWidget {
   final bool rememberMe;
   final ValueChanged<bool?> onChanged;
 
-  const RememberMeAndForgotPassword({
+  const RememberMeAndForgotPasswordWidget({
     super.key,
     required this.rememberMe,
     required this.onChanged,
@@ -92,36 +26,56 @@ class RememberMeAndForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           children: [
-            Checkbox(value: rememberMe, onChanged: onChanged),
-            const Text('Remember Me'),
+            Theme(
+              data: Theme.of(context).copyWith(
+                checkboxTheme: CheckboxThemeData(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  side: const BorderSide(color: Color(0xffCDD1E0), width: 2), // Change border color
+                ),
+              ),
+              child: Checkbox(
+
+                  value: rememberMe,
+                  onChanged: onChanged,
+                visualDensity: VisualDensity.compact,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                checkColor: const Color(0xff000C14),
+                activeColor: const Color(0xffFFFFFF),
+
+              ),
+            ),
+            const Text('Remember Me',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15),),
           ],
         ),
+        const Spacer(),
         TextButton(
           onPressed: () {},
-          child: const Text('Forgot Password?', style: TextStyle(color: Colors.red)),
+          child: const Text('Forgot Password?', style: TextStyle(color: Color(0xffE86969),fontSize: 15,fontWeight: FontWeight.w500)),
         ),
       ],
     );
   }
 }
 
-class DividerWithText extends StatelessWidget {
-  const DividerWithText({super.key});
+class OrDivider extends StatelessWidget {
+  const OrDivider({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: const [
-        Expanded(child: Divider()),
+        Expanded(child: Divider(color: Colors.black,)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text('Or With'),
-        ),
-        Expanded(child: Divider()),
+          child: Text('Or With', style: TextStyle(fontSize:18,fontWeight: FontWeight.w400),), ),
+
+        Expanded(child: Divider(
+          color: Colors.black,
+        )),
       ],
     );
   }
@@ -150,15 +104,34 @@ class SignUpRedirect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Don't have an account?"),
-        TextButton(
-          onPressed: () {},
-          child: const Text('Sign Up', style: TextStyle(color: Colors.blue)),
-        ),
-      ],
+    return RichText(
+      text: TextSpan(
+        children: [
+          const TextSpan(text: "Don't have an account? ",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Color(0xff0D0E0E),
+            ),
+          ),
+          WidgetSpan(
+            child: GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push(AppRouter.kKnowTheIdentityView);
+              },
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff160062),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+

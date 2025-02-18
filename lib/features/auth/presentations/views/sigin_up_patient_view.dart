@@ -94,7 +94,7 @@ class _SignUpPatientViewState extends State<SignUpPatientView> {
                   },
                 ),
                 const SizedBox(height: 20),
-                PhoneNumberField(nameController: phoneNumberController),
+                PhoneNumberField(phoneController: phoneNumberController),
                 const SizedBox(height: 20),
                 AgeTextField(ageController: ageController),
                 const SizedBox(height: 20),

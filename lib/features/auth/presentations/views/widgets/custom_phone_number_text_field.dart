@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../../../Core/widgets/custom_text_form_field_widget.dart';
 
 class PhoneNumberField extends StatelessWidget {
-  final TextEditingController nameController;
+  final TextEditingController phoneController;
 
-  const PhoneNumberField({super.key, required this.nameController});
+  const PhoneNumberField({super.key, required this.phoneController});
 
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
       hintText: "Enter Your Phone Number",
       keyboardType: TextInputType.number,
-      controller: nameController,
+      controller: phoneController,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'This field is required. Please enter a phone number.';
