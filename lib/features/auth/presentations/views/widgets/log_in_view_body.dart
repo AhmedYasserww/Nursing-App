@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nursing_app/Core/widgets/custom_button.dart';
 import 'package:nursing_app/Core/widgets/custom_text_form_field_widget.dart';
 import 'package:nursing_app/constants.dart';
-import 'package:nursing_app/features/auth/presentations/views/log_in_view.dart';
 import 'package:nursing_app/features/auth/presentations/views/widgets/custom_social_button.dart';
+import 'package:nursing_app/features/auth/presentations/views/widgets/do_not_have_an_account.dart';
+import 'package:nursing_app/features/auth/presentations/views/widgets/or_divider_widget.dart';
+import 'package:nursing_app/features/auth/presentations/views/widgets/remember_me_and%20forget_password_widget.dart';
 class LogInViewBody extends StatefulWidget {
   const LogInViewBody({super.key});
 
@@ -80,7 +82,7 @@ class _LogInViewBodyState extends State<LogInViewBody> {
                 imagePath: 'assets/images/google_logo.png', onPressed: () {  },
               ),
               const SizedBox(height: 72),
-              const SignUpRedirect(),
+              const DoNotHaveAnAccount(),
             ],
           ),
         ),
